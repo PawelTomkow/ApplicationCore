@@ -1,0 +1,3 @@
+[submodule "IdentityCore"]
+	path = IdentityCore
+	url = https://github.com/PawelTomkow/IdentityCore
