@@ -1,3 +1,6 @@
 [submodule "IdentityCore"]
 	path = IdentityCore
 	url = https://github.com/PawelTomkow/IdentityCore
+[submodule "UserData"]
+	path = UserData
+	url = https://github.com/Polako912/UserData
