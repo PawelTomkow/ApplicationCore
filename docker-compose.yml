@@ -1,0 +1,46 @@
+version: '3.7'
+
+services: 
+    identity_service:
+        build: 
+            context: ./IdentityCore/src/
+            dockerfile: Dockerfile
+        container_name: identity_app
+        environment:
+            - ASPNETCORE_URLS=http://*:18766
+            - ASPNETCORE_ENVIRONMENT=DockerDev
+        ports: 
+            - "18766:18766"
+        depends_on: 
+            - identity_sqldb
+        networks: 
+            - identity_network
+
+    userdata_service:
+        build: 
+            context: ./UserData/UserData/
+            dockerfile: Dockerfile
+        container_name: userdata_app
+        environment:
+            - ASPNETCORE_URLS=http://*:50001
+            - ASPNETCORE_ENVIRONMENT=DockerDev
+        ports: 
+            - "50001:50001"
+        depends_on: 
+            - identity_sqldb
+        networks: 
+            - identity_network
+
+    identity_sqldb:
+        container_name: identity_sql_db
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        environment:
+            - "SA_PASSWORD=Pass@word"
+            - "ACCEPT_EULA=Y"
+        networks: 
+            - identity_network
+
+networks:
+    identity_network:
+        name: identity_network
+        driver: bridge
